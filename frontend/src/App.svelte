@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   // import dotenv from "dotenv";
   // dotenv.config();
-  const API_URL = `http://44.204.48.105:3000`;
-  // const API_URL = `https://toolfinder.store:3000`;
+  // const API_URL = `http://44.204.48.105:3000`;
+  const API_URL = `https://toolfinder.store`;
   console.log("API_URL", API_URL);
 
   let searchQuery = "";
