@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "@pinecone-database/pinecone": "^1.1.0",
+    "axios": "^1.5.1",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "openai": "^4.11.1",
+    "pinecone-client": "^1.1.1"
+  }
+}
