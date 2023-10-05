@@ -5,6 +5,18 @@ const path = require("path");
 const app = express();
 const port = 3000;
 const fs = require("fs");
+const bodyParser = require("body-parser");
+
+app.set("trust proxy", 1);
+
+app.use(
+  cors({
+    origin: "https://toolfinder.store",
+    methods: ["GET", "POST", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+app.use(bodyParser.json());
 
 const { search, generate_llm_response } = require(path.join(
   __dirname,
@@ -22,7 +34,7 @@ if (!fs.existsSync(summary_mapping_path)) {
 
 const summaryMapping = require(path.join(summary_mapping_path));
 
-app.use(cors());
+// app.use(cors());
 
 app.get("/api/view_data", (req, res) => {
   try {
