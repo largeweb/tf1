@@ -18,9 +18,6 @@ const pinecone = new Pinecone({
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 
-const summaryMapping = require("../../data/summary_mapping.json");
-const urlMapping = require("../../data/url_mapping.json");
-
 const indexName = "tldr-summaries";
 const MODEL = "text-embedding-ada-002";
 const modelDimension = 1536;
