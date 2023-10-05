@@ -4,16 +4,19 @@ const { exec, execSync } = require("child_process");
 const path = require("path");
 const app = express();
 const port = 3000;
+const fs = require("fs");
 
 const { search, generate_llm_response } = require(path.join(
   __dirname,
   "scripts/search.js"
 ));
 
-const summaryMapping = require(path.join(
+const summary_mapping_path = path.join(
   __dirname,
   "../data/summary_mapping.json"
-));
+);
+
+const summaryMapping = require(path.join(summary_mapping_path));
 
 app.use(cors());
 
