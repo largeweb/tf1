@@ -1,6 +1,9 @@
 <script>
   import { onMount } from "svelte";
-  const API_URL = import.meta.env.VITE_API_URL;
+  // import dotenv from "dotenv";
+  // dotenv.config();
+  const API_URL = `http://44.204.48.105:3000`;
+  console.log("API_URL", API_URL);
 
   let searchQuery = "";
   let leftData = [
