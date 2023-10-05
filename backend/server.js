@@ -24,7 +24,7 @@ const summaryMapping = require(path.join(summary_mapping_path));
 
 app.use(cors());
 
-app.get("/view_data", (req, res) => {
+app.get("/api/view_data", (req, res) => {
   try {
     console.log("view_data");
     res.sendFile(path.join(__dirname, "../data/collected.json"));
@@ -33,7 +33,7 @@ app.get("/view_data", (req, res) => {
   }
 });
 
-app.get("/fetch_details", (req, res) => {
+app.get("/api/fetch_details", (req, res) => {
   try {
     console.log("fetch_details");
     const response = execSync("node scripts/fetch_details.js").toString();
@@ -57,7 +57,7 @@ app.get("/fetch_details", (req, res) => {
 
 let isScraping = false; // Add a variable to track scraping status
 
-app.get("/scrape_data", (req, res) => {
+app.get("/api/scrape_data", (req, res) => {
   try {
     console.log("scrape_data");
     if (isScraping) {
@@ -85,7 +85,7 @@ app.get("/scrape_data", (req, res) => {
 
 let isEmbedding = false; // Add a variable to track embedding status
 
-app.get("/embed_data", (req, res) => {
+app.get("/api/embed_data", (req, res) => {
   try {
     console.log("embed_data");
     if (isEmbedding) {
@@ -129,7 +129,7 @@ app.get("/embed_data", (req, res) => {
 //   }
 // });
 
-app.get("/search", async (req, res) => {
+app.get("/api/search", async (req, res) => {
   try {
     console.log("search");
     const searchQuery = req.query.q;
