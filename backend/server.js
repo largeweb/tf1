@@ -16,6 +16,10 @@ const summary_mapping_path = path.join(
   "../data/summary_mapping.json"
 );
 
+if (!fs.existsSync(summary_mapping_path)) {
+  fs.writeFileSync(summary_mapping_path, "{}");
+}
+
 const summaryMapping = require(path.join(summary_mapping_path));
 
 app.use(cors());
