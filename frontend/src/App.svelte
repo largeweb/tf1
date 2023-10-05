@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   let searchQuery = "";
   let leftData = [
@@ -25,6 +26,7 @@
   };
 
   async function processData(button, url) {
+    console.log("url", url);
     buttonLoading[button] = true;
     const response = await fetchData(url);
     jsonData = response;
@@ -36,29 +38,37 @@
     return await response.json();
   }
 
+  // function viewData() {
+  //   processData("view", "/api/view_data");
+  // }
   function viewData() {
-    processData("view", "http://localhost:3000/view_data");
+    processData("view", API_URL + "/api/view_data");
   }
 
+  // function fetchDetails() {
+  //   processData("details", "/api/fetch_details");
+  // }
   function fetchDetails() {
-    processData("details", "http://localhost:3000/fetch_details");
+    processData("details", API_URL + "/api/fetch_details");
   }
 
+  // function scrapeData() {
+  //   processData("scrape", "/api/scrape_data");
+  // }
   function scrapeData() {
-    processData("scrape", "http://localhost:3000/scrape_data");
+    processData("scrape", API_URL + "/api/scrape_data");
   }
 
   async function embedData() {
     buttonLoading.embed = true;
-    await fetchData("http://localhost:3000/embed_data");
+    await fetchData(API_URL + "/api/embed_data");
     buttonLoading.embed = false;
   }
 
   async function search() {
     buttonLoading.search = true;
-    const link = `http://localhost:3000/search?q=${encodeURIComponent(
-      searchQuery
-    )}`;
+    // const link = `/api/search?q=${encodeURIComponent(searchQuery)}`;
+    const link = API_URL + `/api/search?q=${encodeURIComponent(searchQuery)}`;
     const response = await fetchData(link);
     leftData = response.searchResults;
     rightData = response.llmResponse;
