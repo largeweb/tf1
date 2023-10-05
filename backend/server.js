@@ -150,6 +150,10 @@ app.get("/api/search", async (req, res) => {
     const searchResults = await search(searchQuery);
     const matches = searchResults.map((match) => summaryMapping[match.id]);
 
+    console.log(`searchResults: ${searchResults}`);
+    // console.log({ matches });
+    console.log({ matches_length: matches.length });
+
     const matches_string = matches.join("\n");
     console.log({ matches_string });
     const llm_response = await generate_llm_response(

@@ -80,9 +80,13 @@ async function createEmbeddings(queries) {
 // })();
 
 async function search(query) {
+  console.log(`Searching for ${query}...`);
   const index = pinecone.index(indexName);
+  console.log(`Index: ${index}`);
   const embeddings = await createEmbeddings([query]);
+  console.log(`Embeddings: ${embeddings}`);
   const searchEmbedding = embeddings;
+  console.log(`Search Embedding: ${searchEmbedding}`);
   const res = await index.query(
     { topK: 10, vector: searchEmbedding },
     10,
