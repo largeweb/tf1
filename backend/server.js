@@ -97,6 +97,34 @@ app.get("/api/scrape_data", (req, res) => {
 
 let isEmbedding = false; // Add a variable to track embedding status
 
+// app.get("/api/embed_data", (req, res) => {
+//   try {
+//     console.log("embed_data");
+//     if (isEmbedding) {
+//       console.log(`There is already an Embedding in Progress`);
+//       res.json({ message: "There is already an Embedding in Progress" });
+//     } else {
+//       console.log(`Starting Embedding`);
+//       isEmbedding = true;
+//       res.json({ message: "Embedding Started" });
+//       const embed = exec("node scripts/embed_data.js");
+//       embed.stdout.on("data", (data) => {
+//         console.log(data);
+//       });
+//       embed.stderr.on("data", (data) => {
+//         console.log(data);
+//       });
+//       embed.on("close", (code) => {
+//         console.log(`child process exited with code ${code}`);
+//         isEmbedding = false; // Reset embedding status when process ends
+//       });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
+
+// same as above but if the child process exits with code null, then we retry in a while loop 30 times
 app.get("/api/embed_data", (req, res) => {
   try {
     console.log("embed_data");
@@ -117,12 +145,31 @@ app.get("/api/embed_data", (req, res) => {
       embed.on("close", (code) => {
         console.log(`child process exited with code ${code}`);
         isEmbedding = false; // Reset embedding status when process ends
+        if (code === null) {
+          console.log(`child process exited with code ${code}`);
+          let i = 0;
+          while (code === null && i < 30) {
+            console.log(`child process exited with code ${code}`);
+            const embed = exec("node scripts/embed_data.js");
+            embed.stdout.on("data", (data) => {
+              console.log(data);
+            });
+            embed.stderr.on("data", (data) => {
+              console.log(data);
+            });
+            embed.on("close", (code) => {
+              console.log(`child process exited with code ${code}`);
+              isEmbedding = false; // Reset embedding status when process ends
+            });
+            i++;
+          }
+        }
       });
     }
   } catch (err) {
     console.log(err);
   }
-});
+}
 
 // app.get("/search", (req, res) => {
 //   try {
@@ -149,6 +196,10 @@ app.get("/api/search", async (req, res) => {
 
     const searchResults = await search(searchQuery);
     const matches = searchResults.map((match) => summaryMapping[match.id]);
+    console.log({ matches });
+
+    const urls = searchResults.map((match) => match.url);
+    console.log({ urls });
 
     console.log(`searchResults: ${JSON.stringify(searchResults)}`);
     // console.log({ matches });
@@ -162,7 +213,7 @@ app.get("/api/search", async (req, res) => {
     );
     console.log({ llm_response });
 
-    res.json({ searchResults: matches, llmResponse: llm_response });
+    res.json({ searchResults: matches, llmResponse: llm_response, urls: urls });
     // res.json({ searchResults, llm_response });
     // res.json({ test: "test" });
   } catch (err) {
