@@ -143,19 +143,19 @@ app.get("/api/embed_data", (req, res) => {
         console.log(data);
       });
       embed.on("close", (code) => {
-        console.log(`child process exited with code ${code}`);
+        console.log(`begin 0`);
         isEmbedding = false; // Reset embedding status when process ends
         if (code === null) {
-          console.log(`child process exited with code ${code}`);
+          console.log(`begin 1`);
           let i = 0;
           while (code === null && i < 30) {
-            console.log(`child process exited with code ${code}`);
+            console.log(`start of loop`);
             const embed = exec("node scripts/embed_data.js");
             embed.stdout.on("data", (data) => {
-              console.log(data);
+              console.log("out data: " + data);
             });
             embed.stderr.on("data", (data) => {
-              console.log(data);
+              console.log("err data: " + data);
             });
             embed.on("close", (code) => {
               console.log(`child process exited with code ${code}`);
