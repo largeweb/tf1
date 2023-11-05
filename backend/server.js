@@ -162,6 +162,10 @@ app.get("/api/embed_data", (req, res) => {
               isEmbedding = false; // Reset embedding status when process ends
             });
             i++;
+            // wait 10 seconds
+            setTimeout(() => {
+              console.log("waiting 10 seconds");
+            }, 10000);
           }
         }
       });
