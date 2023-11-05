@@ -169,7 +169,7 @@ app.get("/api/embed_data", (req, res) => {
   } catch (err) {
     console.log(err);
   }
-}
+});
 
 // app.get("/search", (req, res) => {
 //   try {
